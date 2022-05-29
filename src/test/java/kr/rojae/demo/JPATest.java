@@ -7,6 +7,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @SpringBootTest
@@ -16,10 +17,13 @@ public class JPATest {
     private UserRepository userRepository;
 
     @Test
-    @DisplayName("Eager type은 User를 전체 검색할 때 N+1문제가 발생한다.")
+    @Transactional
+    @DisplayName("Lazy type은 User 검색 후 필드 검색을 할 때 N+1문제가 발생한다.")
     void userFindTest() {
         System.out.println("== start ==");
         List<User> users = userRepository.findAll();
+        for(User user : users)
+            System.out.println(user.getArticles().size());
         System.out.println("== end ==");
     }
 

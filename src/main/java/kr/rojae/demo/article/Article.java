@@ -20,6 +20,6 @@ public class Article {
     @Lob
     private String content;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.LAZY)
     private User user;
 }
